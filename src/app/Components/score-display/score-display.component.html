@@ -1,0 +1,89 @@
+<div class="answer d-flex justify-content-end me-3 mt-3 d-none d-md-flex">
+  
+    <span  (click)="showAnswers()">🕒show answers?</span>
+  </div>
+  
+  
+  <div class="d-flex justify-content-center align-items-center mt-4 ms-2">
+    <h3 class="mt-2" id="welcome--txt">Results Score ⏳ </h3>
+  </div>
+  
+  
+  
+  <div class="container">
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-6">
+        <div class="shadow h-100 rounded">
+          <div class="card-body text-center">
+            <div class="mt-2">
+
+                <div class="  d-flex justify-content-center align-items-center" [ngClass]="{
+                    'red': score < 5,
+                    'yellow': score >= 5 && score < 8,
+                    'green': score >= 8
+                  }">
+
+                <ng-container *ngIf="score < 5">
+                    <h4 class="remark mt-2 font-weight-bolder">Poor!</h4>
+                  </ng-container>
+                  <ng-container *ngIf="score >= 5 && score < 8">
+                    <h4 class=" remark mt-2 font-weight-bolder">Good!</h4>
+                  </ng-container>
+                  <ng-container *ngIf="score >= 8">
+                    <h4 class="remark mt-2 font-weight-bolder">Excellent!</h4>
+                  </ng-container>
+            </div>
+            
+            <div class="d-flex justify-content-center mt-3">
+              
+              <div class="d-flex flex-column">
+              
+                <div class="circular-score d-flex justify-content-center align-items-center" [ngClass]="{
+                    'red': score < 5,
+                    'yellow': score >= 5 && score < 8,
+                    'green': score >= 8
+                  }">
+                    <div class="score-value">{{ score }}</div>
+                  </div>
+                  
+                
+                  
+                  
+                </div>
+            </div>
+            <div class="mt-5 d-flex justify-content-between">
+
+                <div>
+                    <button
+                    type="button"
+                    class="begin exit-Drill ms-4"
+                    (click)="exit()"
+                  >
+                    Exit Drill
+                  </button>
+                </div>
+            
+                <div>
+                    <button
+                    type="button"
+                    class="begin restart me-3"
+                    (click)="restart()"
+                  >
+                    Restart
+                  </button>
+                </div>
+            
+            </div>
+            
+           
+           
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="answer d-flex justify-content-end me-3 mt-5 d-md-none">
+      <span  (click)="showAnswers()">🕒show answers?</span>
+    </div>  
+

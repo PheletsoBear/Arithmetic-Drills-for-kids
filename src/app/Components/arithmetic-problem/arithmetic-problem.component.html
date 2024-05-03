@@ -1,0 +1,90 @@
+<div class="answer d-flex justify-content-end me-3 mt-3 d-none d-md-flex">
+  <span></span>
+  Remaining Question : {{ remainingQuestions }}
+</div>
+
+
+<div class="d-flex justify-content-center align-items-center mt-4 ms-2">
+  <h3 class="mt-2" id="welcome--txt">Question❔</h3>
+</div>
+
+<div class="mt-2 d-flex justify-content-center">
+  <span class="badge rounded-circle p-2.5">{{ questionNumber }}</span>
+</div>
+
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="shadow h-100 rounded">
+        <div class="card-body text-center mb-3">
+          <div class="">
+            <h4 class="mt-3 font-weight-bolder">
+              {{ currentProblem.operand1 }} {{ currentProblem.operator }}
+              {{ currentProblem.operand2 }} = ?
+            </h4>
+          </div>
+          <span class="answer mt-5">Answer is:</span>
+          <div class="d-flex justify-content-center mt-2">
+            <input
+              type="text"
+              class="custom-input"
+              [(ngModel)]="userAnswer"
+              (ngModelChange)="validateInput()"
+              (blur)="inputTouched = true"
+              [ngClass]="{
+                'error-input': (emptyInput && inputTouched) || invalidInput
+              }"
+            />
+            <div class="d-flex flex-column">
+            
+                <ng-container *ngIf="isAnswerSubmitted">
+
+                    <span *ngIf="isAnswerCorrect" class="correct--answer text-success ms-3 mt-2"
+                      ><i class="fa fa-check" aria-hidden="true">
+                        <span class="ms-1 d-none d-md-inline-flex align-items-center">correct</span></i
+                      >
+                    </span>
+                    
+                    <span *ngIf="!isAnswerCorrect" class="wrong--answer text-danger ms-3  mt-2"
+                      ><i class="fa fa-times" aria-hidden="true"
+                        ><span class="ms-1 d-none d-md-inline-flex align-items-center">wrong</span></i
+                      >
+                    </span>
+
+                </ng-container >
+
+              
+
+              
+
+            </div>
+          </div>
+          <div class="d-flex justify-content-center mt-3">
+            <span class="error--input" *ngIf="emptyInput && inputTouched">
+              *Field cannot be empty.</span
+            >
+            <span class="error--input" *ngIf="invalidInput && inputTouched"
+              >*Please enter a number.</span
+            >
+          </div>
+
+          <div class="mt-4 d-flex justify-content-end me-4">
+            <button
+              type="button"
+              class="begin"
+              (click)="submitAnswer()"
+              [disabled]="emptyInput || invalidInput"
+              [ngClass]="{ 'disabled-button': emptyInput || invalidInput }"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="answer d-flex justify-content-end me-3 mt-5 d-md-none">
+  <span> Remaining Question : {{ remainingQuestions }}</span>
+</div>
