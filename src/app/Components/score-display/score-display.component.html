@@ -1,9 +1,9 @@
 <div class="answer d-flex justify-content-end me-3 mt-3 d-none d-md-flex">
-  
+  <!--Shows answers for large devices-->
     <span  (click)="showAnswers()">🕒show answers?</span>
   </div>
   
-  
+  <!--this is report card definition-->
   <div class="d-flex justify-content-center align-items-center mt-4 ms-2">
     <h3 class="mt-2" id="welcome--txt">Results Score ⏳ </h3>
   </div>
@@ -16,7 +16,7 @@
         <div class="shadow h-100 rounded">
           <div class="card-body text-center">
             <div class="mt-2">
-
+<!--Report cad-->
                 <div class="  d-flex justify-content-center align-items-center" [ngClass]="{
                     'red': score < 5,
                     'yellow': score >= 5 && score < 8,
@@ -82,7 +82,7 @@
         </div>
       </div>
     </div>
-  
+  <!--Shows repory card for mobile device-->
     <div class="answer d-flex justify-content-end me-2 mt-3 d-md-none">
       <span  (click)="showAnswers()">🕒show answers?</span>
     </div>  
