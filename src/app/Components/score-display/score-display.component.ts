@@ -173,7 +173,7 @@ if (this.score < 5) {
 
 
       Swal.fire({
-        title: "Report Card:",
+        title: "Memorandum:",
         html: reportText  ,
         
       });
