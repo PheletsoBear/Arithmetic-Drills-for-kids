@@ -16,6 +16,7 @@ export class ScoreDisplayComponent implements OnInit {
   sessionProblems: ArithmeticProblem[] = [];
   sessionAnswerMarking: boolean[] = [];
   userAnswers: ArithmeticProblem[] = [];
+  expectedAnswer: ArithmeticProblem[] = [];
 
   
  constructor(private route: ActivatedRoute,private router: Router){}
@@ -39,6 +40,12 @@ if (serializedAnswerMarking) {
 if (serializedUserAnswers) {
   this.userAnswers = JSON.parse(decodeURIComponent(serializedUserAnswers));
 }
+
+const serializedExpectedAswers = decodeURIComponent(params['expectedAnswer']);
+ if(serializedExpectedAswers){
+  this.expectedAnswer = JSON.parse(decodeURIComponent(serializedExpectedAswers));
+ }
+
     console.log('session answers:', this.userAnswers)
     });
 
@@ -101,7 +108,7 @@ if (serializedUserAnswers) {
         const userAnswer = this.userAnswers[i];
         reportText += `
           <div class="report-row">
-            <div class="question-label mt-2">Question ${i + 1}
+            <div class="question-label mt-2"><b>Question ${i + 1}</b>
             <div class="question-content">${problem.operand1} ${problem.operator} ${problem.operand2} = ${userAnswer}
             <i class="fa fa-${isCorrect ? 'check' : 'times'}" style="color:${isCorrect ? 'green' : 'red'}; margin-left: 10px;" aria-hidden="true"></i>
             </div>
@@ -132,6 +139,45 @@ let scoreDisplay = `<p style="margin-top: 15px; font-weight: bolder;">Total: <sp
       });
     }
     
+
+    memo():void{
+      let reportText = '';
+  
+      // Traverse through session problems and also the answer marking
+      for (let i = 0; i < this.sessionProblems.length; i++) {
+        const problem = this.sessionProblems[i];
+        const expectedAnswers = this.expectedAnswer[i]
+        reportText += `
+          <div class="report-row">
+            <div class="question-label mt-2"><b>Question ${i + 1}</b>
+            <div class="question-content">${problem.operand1} ${problem.operator} ${problem.operand2} = ${expectedAnswers}
+            </div>
+            
+          </div>
+        `;
+      }
+      
+    
+// Determine the color based on the score
+let scoreColor: string;
+if (this.score < 5) {
+  scoreColor = 'red'; // Less than 5 - green
+} else if (this.score >= 5 && this.score < 8) {
+  scoreColor = '#ffc300'; // Between 5 and 8 - current color
+} else {
+  scoreColor = 'green'; // Greater than or equal to 8 - red
+}
+
+
+
+
+
+      Swal.fire({
+        title: "Report Card:",
+        html: reportText  ,
+        
+      });
+    }
     
   
 }

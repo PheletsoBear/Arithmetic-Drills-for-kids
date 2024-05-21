@@ -178,6 +178,10 @@ font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
     background-color: #ffc300;
   }
 
+  .memo{
+    cursor: pointer;
+  }
+
 
 /* Small devices */
   @media (max-width: 767.98px) { 

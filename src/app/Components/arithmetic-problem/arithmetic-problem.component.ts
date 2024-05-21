@@ -5,6 +5,7 @@ import { ProblemServiceService } from '../../services/problem-service.service';
 import { Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
+import { ExitComponent } from '../exit/exit.component';
 
 
 
@@ -27,7 +28,8 @@ export class ArithmeticProblemComponent implements OnInit {
   inputTouched = false;
   isAnswerCorrect: boolean = false;
   isAnswerSubmitted: boolean = false;
-  sessionAnswerMarking: boolean[] = []
+  sessionAnswerMarking: boolean[] = [];
+  expectedAnswer: number[] = [];
 
   constructor(private problemService: ProblemServiceService, private router:Router, private location: Location) { }
 
@@ -86,12 +88,14 @@ export class ArithmeticProblemComponent implements OnInit {
     }
 
     const userAnswerNumber = Number(this.userAnswer);
+    
 
     if (userAnswerNumber === expectedAnswer) {
       this.score++;
       this.isAnswerCorrect = true
     }
  
+    this.expectedAnswer.push(expectedAnswer)
     this.userAnswers.push(userAnswerNumber); // Adds user's answer to the userAnswers array
     this.sessionAnswerMarking.push(this.isAnswerCorrect)
    
@@ -108,6 +112,7 @@ export class ArithmeticProblemComponent implements OnInit {
      this.inputTouched = false;
        this.userAnswer = ''; // Reset the input field
        this.isAnswerSubmitted = false; 
+       
     }, 1800);
 
 
@@ -134,10 +139,11 @@ export class ArithmeticProblemComponent implements OnInit {
        // Serializing session Problems array into a string
        const serializedProblems = JSON.stringify(this.sessionProblems);
       const serializedAnswerMarking = JSON.stringify(this.sessionAnswerMarking);
-      const serializedUserAnswers = JSON.stringify(this.userAnswers)
+      const serializedUserAnswers = JSON.stringify(this.userAnswers);
+      const serializedExpectedAswers = JSON.stringify(this.expectedAnswer);
 
        // Navigating to the target route with both score and session Problems as query parameters
-       this.router.navigateByUrl(`/arithmetic-problem/score-display?score=${this.score}&sessionProblems=${encodeURIComponent(serializedProblems)}&sessionAnswerMarking=${encodeURIComponent(serializedAnswerMarking)}&userAnswers=${encodeURIComponent(serializedUserAnswers)}`);
+       this.router.navigateByUrl(`/arithmetic-problem/score-display?score=${this.score}&sessionProblems=${encodeURIComponent(serializedProblems)}&sessionAnswerMarking=${encodeURIComponent(serializedAnswerMarking)}&userAnswers=${encodeURIComponent(serializedUserAnswers)}&expectedAnswer=${encodeURIComponent(serializedExpectedAswers)}`);
      
       
 
@@ -149,7 +155,8 @@ export class ArithmeticProblemComponent implements OnInit {
       this.remainingQuestions = 9;
       this.score = 0;
       this.userAnswer = '';
-      this.sessionAnswerMarking = []
+      this.sessionAnswerMarking = [];
+      this.expectedAnswer = [];
     }
   }
 
