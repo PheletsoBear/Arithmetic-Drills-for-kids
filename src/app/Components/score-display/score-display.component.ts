@@ -10,17 +10,19 @@ import { ArithmeticProblem } from '../../models/arithmetic-problem.model';
 })
 export class ScoreDisplayComponent implements OnInit {
   
-  isAnswerCorrect: boolean[] = [true, false, true, false,true, false, true, false, false, true]
+  
 
   score: number = 0;
   sessionProblems: ArithmeticProblem[] = [];
   sessionAnswerMarking: boolean[] = [];
+  userAnswers: ArithmeticProblem[] = [];
+
   
  constructor(private route: ActivatedRoute,private router: Router){}
  
  
   ngOnInit(): void {
-    // Retrieve the score parameter from the URL
+    // Retrieve the  parameters from the URL and also decodes the decoded  variables
     this.route.queryParams.subscribe(params =>{
       this.score = params['score']
 
@@ -33,7 +35,11 @@ export class ScoreDisplayComponent implements OnInit {
 if (serializedAnswerMarking) {
   this.sessionAnswerMarking = JSON.parse(serializedAnswerMarking);
 }
-
+      const serializedUserAnswers = decodeURIComponent(params['userAnswers']);
+if (serializedUserAnswers) {
+  this.userAnswers = JSON.parse(decodeURIComponent(serializedUserAnswers));
+}
+    console.log('session answers:', this.userAnswers)
     });
 
     }
@@ -87,13 +93,21 @@ if (serializedAnswerMarking) {
 
     showAnswers(): void {
       let reportText = '';
-
-      //this traverse through session problems and also the answer marking
+  
+      // Traverse through session problems and also the answer marking
       for (let i = 0; i < this.sessionProblems.length; i++) {
         const problem = this.sessionProblems[i];
         const isCorrect = this.sessionAnswerMarking[i];
-        reportText += `<div>${problem.operand1} ${problem.operator} ${problem.operand2} = ? : <i class="fa fa-${isCorrect ? 'check' : 'times'}" style="color:${isCorrect ? 'green' : 'red'};" aria-hidden="true"></i></div>`;
-        
+        const userAnswer = this.userAnswers[i];
+        reportText += `
+          <div class="report-row">
+            <div class="question-label mt-2">Question ${i + 1}
+            <div class="question-content">${problem.operand1} ${problem.operator} ${problem.operand2} = ${userAnswer}
+            <i class="fa fa-${isCorrect ? 'check' : 'times'}" style="color:${isCorrect ? 'green' : 'red'}; margin-left: 10px;" aria-hidden="true"></i>
+            </div>
+            
+          </div>
+        `;
       }
       
     
