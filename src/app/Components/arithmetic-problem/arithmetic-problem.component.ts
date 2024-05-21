@@ -134,9 +134,10 @@ export class ArithmeticProblemComponent implements OnInit {
        // Serializing session Problems array into a string
        const serializedProblems = JSON.stringify(this.sessionProblems);
       const serializedAnswerMarking = JSON.stringify(this.sessionAnswerMarking);
+      const serializedUserAnswers = JSON.stringify(this.userAnswers)
 
        // Navigating to the target route with both score and session Problems as query parameters
-       this.router.navigateByUrl(`/arithmetic-problem/score-display?score=${this.score}&sessionProblems=${encodeURIComponent(serializedProblems)}&sessionAnswerMarking=${encodeURIComponent(serializedAnswerMarking)}`);
+       this.router.navigateByUrl(`/arithmetic-problem/score-display?score=${this.score}&sessionProblems=${encodeURIComponent(serializedProblems)}&sessionAnswerMarking=${encodeURIComponent(serializedAnswerMarking)}&userAnswers=${encodeURIComponent(serializedUserAnswers)}`);
      
       
 
